@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-
+'use client'
 const cars = [
   { id: 1, name: "300 Touring", price: 28999.99, category: "Sedan", imageUrl: "https://cdn.dummyjson.com/products/images/vehicle/300%20Touring/1.png", description: "The 300 Touring is a stylish and powerful sedan...", brand: "Dodge", rating: 4.5, stock: 15 },
   { id: 2, name: "Charger SXT RWD", price: 32999.99, category: "Sedan", imageUrl: "https://cdn.dummyjson.com/products/images/vehicle/Pacifica%20Touring/1.png", description: "The Charger SXT RWD is a sporty and practical sedan...", brand: "Dodge", rating: 4.2, stock: 10 },
