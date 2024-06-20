@@ -1,6 +1,6 @@
-'use client'
 import React, { useState } from "react";
 import Image from "next/image";
+
 const cars = [
   { id: 1, name: "300 Touring", price: 28999.99, category: "Sedan", imageUrl: "https://cdn.dummyjson.com/products/images/vehicle/300%20Touring/1.png", description: "The 300 Touring is a stylish and powerful sedan...", brand: "Dodge", rating: 4.5, stock: 15 },
   { id: 2, name: "Charger SXT RWD", price: 32999.99, category: "Sedan", imageUrl: "https://cdn.dummyjson.com/products/images/vehicle/Pacifica%20Touring/1.png", description: "The Charger SXT RWD is a sporty and practical sedan...", brand: "Dodge", rating: 4.2, stock: 10 },
@@ -12,30 +12,12 @@ const cars = [
 const CarList: React.FC<{ category: string }> = ({ category }) => {
   const [selectedCar, setSelectedCar] = useState<any | null>(null);
 
-  // CarDetails component defined within CarList component
-  const CarDetails: React.FC<{ car: any; onClose: () => void }> = ({ car, onClose }) => {
-    return (
-      <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
-        <div className="bg-white p-8 rounded-lg shadow-lg w-3/4 md:w-1/2">
-          <h2 className="text-2xl font-bold mb-4">{car.name}</h2>
-          <p>{car.description}</p>
-          <p className="text-xl font-semibold mt-4">Price: ${car.price.toFixed(2)}</p>
-          <h3 className="text-lg font-semibold mt-4">Additional Details</h3>
-          <ul className="list-disc list-inside">
-            <li>Brand: {car.brand}</li>
-            <li>Category: {car.category}</li>
-            <li>Rating: {car.rating}</li>
-            <li>Stock: {car.stock}</li>
-          </ul>
-          <button
-            onClick={onClose}
-            className="mt-4 p-2 bg-blue-500 text-white rounded"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    );
+  const handleSelectCar = (car: any) => {
+    setSelectedCar(car);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedCar(null);
   };
 
   const filteredCars = cars.filter(car => car.category.toLowerCase() === category.toLowerCase());
@@ -51,9 +33,9 @@ const CarList: React.FC<{ category: string }> = ({ category }) => {
               <p className="text-lg font-medium">${car.price.toFixed(2)}</p>
               <button
                 className="mt-4 p-2 bg-blue-500 text-white rounded"
-                onClick={() => setSelectedCar(car)}
+                onClick={() => handleSelectCar(car)}
               >
-                Check vehicle
+                View Details
               </button>
             </div>
           ))
@@ -62,10 +44,26 @@ const CarList: React.FC<{ category: string }> = ({ category }) => {
         )}
       </div>
       {selectedCar && (
-        <CarDetails
-          car={selectedCar}
-          onClose={() => setSelectedCar(null)}
-        />
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-3/4 md:w-1/2">
+            <h2 className="text-2xl font-bold mb-4">{selectedCar.name}</h2>
+            <p>{selectedCar.description}</p>
+            <p className="text-xl font-semibold mt-4">Price: ${selectedCar.price.toFixed(2)}</p>
+            <h3 className="text-lg font-semibold mt-4">Additional Details</h3>
+            <ul className="list-disc list-inside">
+              <li>Brand: {selectedCar.brand}</li>
+              <li>Category: {selectedCar.category}</li>
+              <li>Rating: {selectedCar.rating}</li>
+              <li>Stock: {selectedCar.stock}</li>
+            </ul>
+            <button
+              onClick={handleCloseDetails}
+              className="mt-4 p-2 bg-blue-500 text-white rounded"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
